@@ -38,7 +38,7 @@ def api_seller(seller_id,token):
 # Transforma a variavel em Dataframe do Panda e Renomeia
 def df_renomea(df):
     df = pd.DataFrame(df)    
-    df = df.rename(columns={0: "filtro",1:"seller",2:"item_id",3:"title",4:"price",5:"stop_time",6:"condition",7:"available_quantity"})
+    df = df.rename(columns={0: "filtro",1:"seller",2:"item_id",3:"title",4:"price",5:"stop_time",6:"condition"})
     return df
 
 
@@ -46,7 +46,7 @@ def df_renomea(df):
 
 #Data atual para gerar o arquivo
 data_atual_file = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
-token = "ADM-601-112220-4ccaafe8e489dc0c576a75625572a349-fbsampaio-62867623"
+token = "ADM-601-111912-01ea7e53e867bea5a28584a1930a1b60-jecdurvalo-62867623"
 
 
 # In[ ]:
@@ -59,7 +59,7 @@ maximo = 0
 
 resultado = []
 # Lista dos itens e valores minimos e maximos buscados pelo script
-lista_itens = pd.read_csv("G://Meu Drive//Black Friday//itens_monitoramento.csv")
+lista_itens = pd.read_csv("C://Users//jecdurvalo//Documents//Rose//itens_monitoramento.csv")
 lista = []
 valor_min = []
 valor_max = []
@@ -80,11 +80,10 @@ while t < len(lista):
     while contador < maximo:
         api_resultado = item_api(lista[t],contador,token)
         for i in api_resultado:
-            resultado.append([lista[t],i["seller"]["id"],i["id"],i["title"],i["price"],i['stop_time'],i['condition'],i['available_quantity']])        
+            resultado.append([lista[t],i["seller"]["id"],i["id"],i["title"],i["price"],i['stop_time'],i['condition']])        
         contador += 50        
     t += 1    
-    contador = 0
-    
+    contador = 0  
 else:
     resultado = df_renomea(resultado)
 
@@ -94,14 +93,14 @@ fraude = pd.DataFrame(columns=['filtro','seller','item_id','title','price'])
 while f < len(lista_itens):
     r = resultado[(resultado["filtro"] == lista_itens["item"][f]) & (resultado["price"] > lista_itens["min"][f]) & (resultado["price"] < lista_itens["max"][f])] 
     fraude = fraude.append(r)
-    f += 1
-fraude = fraude[fraude["available_quantity"] > 5]
-
+    f += 1  
+    
+fraude = fraude 
 # apaga dos duplicados
 fraude = fraude.drop_duplicates("seller", keep='last')
 
 # salva o arquivo
-writer = pd.ExcelWriter('G://Meu Drive//Black Friday//items-black-rose-{}.xlsx'.format(data_atual_file))
-fraude.to_excel(writer, 'Sheet1')
+writer = pd.ExcelWriter('C://Users//jecdurvalo//Documents//Rose//items-black-rose-{}.xlsx'.format(data_atual_file))
+fraude.to_excel(writer, 'Planilha1') 
 writer.save()
 

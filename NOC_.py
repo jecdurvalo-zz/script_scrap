@@ -14,7 +14,7 @@ import datetime
 # In[24]:
 
 
-token = 'ADM-601-112218-bd9b1e86b3afce9d86f09e1da4e99e08-fbsampaio-62867623'
+token = 'ADM-601-111912-01ea7e53e867bea5a28584a1930a1b60-jecdurvalo-62867623'
 
 
 # In[25]:
@@ -65,10 +65,10 @@ while t < len(s):
     t += 1
     
 seller = df_renomea(seller)
-seller = seller[seller["dt_created"] > '2018-09-01'].sort_values(by="dt_created", ascending=False)
+seller = seller[seller["dt_created"] > '2019-09-01'].sort_values(by="dt_created", ascending=False)
 
 
-writer = pd.ExcelWriter('G://Meu Drive//Black Friday//noc-{}.xlsx'.format(data_atual_file))
-seller.to_excel(writer, 'Sheet1')
+writer = pd.ExcelWriter('C://Users//jecdurvalo//Documents//Rose//items-black-rose-{}.xlsx'.format(data_atual_file))
+seller.to_excel(writer, 'Planilha1')
 writer.save()
 
