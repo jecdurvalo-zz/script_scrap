@@ -63,7 +63,8 @@ lista_itens = pd.read_csv("C://Users//jecdurvalo//Documents//script//itens_monit
 lista = []
 #valor_min = []
 #valor_max = []
-# Junsta a info em uma unica lista
+
+# Junta a info em uma unica lista
 fraude = pd.DataFrame(columns=['filtro','seller','item_id','title','price'])
 for i in lista_itens["item"]:
     lista.append(i)
